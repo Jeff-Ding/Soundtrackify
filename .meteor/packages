@@ -20,3 +20,4 @@ insecure                # Allow all DB writes from clients (for prototyping)
 numtel:mysql
 xinranxiao:accounts-spotify
 iron:router
+xinranxiao:spotify-web-api

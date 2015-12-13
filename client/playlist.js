@@ -17,13 +17,6 @@ Template.playlist.events({
     // prevent browser default button click
     event.preventDefault();
 
-    // login to Spotify
-    var options = {
-      showDialogue: true,
-      requestPermissions: ['playlist-modify-private']
-    };
-    Meteor.loginWithSpotify(options);
-
     var songlist = matchedId.filter(function(song) {
       if (song.checked) {
         return song;

@@ -18,6 +18,13 @@ Template.disambiguation.events({
 
     Session.set("titles", []);
 
+    // login to Spotify
+    var options = {
+      showDialogue: false,
+      requestPermissions: ['playlist-modify-private']
+    };
+    Meteor.loginWithSpotify(options);
+
     Router.go('playlist');
   }
 });

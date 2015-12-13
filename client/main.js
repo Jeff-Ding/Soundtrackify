@@ -3,22 +3,39 @@ Template.home.events({
     // prevent browser default form submit
     event.preventDefault();
 
-    // population session playlist
-    Session.set('playlist', [
-      { title: "Song 1", artist: "Art 1", checked: true },
-      { title: "Song 2", artist: "Art 2", checked: true },
-      { title: "Song 3", artist: "Art 3", checked: true },
-      { title: "Song 4", artist: "Art 4", checked: true },
-    ]);
+    var input = event.target.text.value;
+    matchedTitle.change(input);
+    matchedSubstring.change(input);
 
     // redirect to songs page
-    Router.go('created-playlist');
+    Router.go('disambiguation');
+  }
+});
+
+Template.disambiguation.helpers({
+  moviesExact: function () {
+    return matchedTitle.reactive();
+  },
+
+  moviesInexact: function () {
+    return matchedSubstring.reactive();
+  }
+});
+
+Template.disambiguation.events({
+  "click .selection": function (event) {
+    // prevent default browser link redirection
+    event.preventDefault();
+
+    matchedId.change(this.movie_id);
+
+    Router.go('/created-playlist');
   }
 });
 
 Template.created.helpers({
   songs: function () {
-    return Session.get('playlist');
+    return matchedId.reactive();
   },
 
   movie: "Movie Title"
@@ -33,6 +50,12 @@ Template.created.events({
     // prevent browser default button click
     event.preventDefault();
 
-    console.log("Button clicked!");
+    var options = {
+      showDialogue: true,
+      requestPermissions: ['user-read-email']
+    };
+    Meteor.loginWithSpotify(options);
+
+    console.log(matchedId.reactive());
   }
 });

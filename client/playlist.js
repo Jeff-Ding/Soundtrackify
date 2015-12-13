@@ -1,42 +1,4 @@
-Template.home.events({
-  "submit .search": function (event) {
-    // prevent browser default form submit
-    event.preventDefault();
-
-    var input = event.target.text.value;
-    matchedTitle.change(input);
-    matchedSubstring.change(input);
-
-    // redirect to songs page
-    Router.go('disambiguation');
-  }
-});
-
-Template.disambiguation.helpers({
-  moviesExact: function () {
-    return matchedTitle.reactive();
-  },
-
-  moviesInexact: function () {
-    return matchedSubstring.reactive();
-  }
-});
-
-Template.disambiguation.events({
-  "click .selection": function (event) {
-    // prevent default browser link redirection
-    event.preventDefault();
-
-    Session.set("title", this.title);
-    matchedId.change(this.movie_id);
-
-    Session.set("titles", []);
-
-    Router.go('/created-playlist');
-  }
-});
-
-Template.created.helpers({
+Template.playlist.helpers({
   songs: function () {
     return matchedId.reactive();
   },
@@ -46,7 +8,7 @@ Template.created.helpers({
   }
 });
 
-Template.created.events({
+Template.playlist.events({
   "click .toggle-checked": function() {
     this.checked = !this.checked;
   },

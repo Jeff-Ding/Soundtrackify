@@ -17,18 +17,6 @@ process.on('SIGTERM', closeAndExit);
 // close connections on exit (ctrl + c)
 process.on('SIGINT', closeAndExit);
 
-// Connect to Spotify web service
-
-ServiceConfiguration.configurations.update(
-  { "service": "spotify" },
-  {
-    $set: {
-      "clientId": Meteor.settings.SpotifyID,
-      "secret": Meteor.settings.SpotifyKey
-    }
-  },
-  { upsert: true }
-);
 
 Meteor.publish('title', function(input) {
   return liveDb.select(

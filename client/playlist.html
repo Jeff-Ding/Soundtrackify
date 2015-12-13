@@ -1,0 +1,28 @@
+<template name = "playlist">
+  <h2>{{movie}}</h2>
+
+  <ul>
+    {{#each songs}}
+      {{> song}}
+    {{/each}}
+  </ul>
+
+  <button type = "button" class = "create">create playlist</button>
+</template>
+
+<template name = "song">
+  <li>
+    <input type="checkbox" checked="{{checked}}" class="toggle-checked"/>
+    <span>
+      {{#if performer}}
+        {{title}} - {{performer}}
+      {{else}}
+        {{#if writer}}
+          {{title}} - {{writer}}
+        {{else}}
+          {{title}} - Unknown Artist
+        {{/if}}
+      {{/if}}
+    </span>
+  </li>
+</template>

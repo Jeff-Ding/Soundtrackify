@@ -15,9 +15,16 @@
 
   <ul>
     {{#each songs}}
-      <li>{{title}}</li>
+      {{> song}}
     {{/each}}
   </ul>
 
   <button type = "button" class = "create">create playlist</button>
+</template>
+
+<template name = "song">
+  <li>
+    <input type="checkbox" checked="{{checked}}" class = "toggle-checked"/>
+    <span>{{title}} - {{artist}}</span>
+  </li>
 </template>

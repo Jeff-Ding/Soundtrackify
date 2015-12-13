@@ -1,9 +1,19 @@
+// Connect to database
+var liveDb = new LiveMysql({
+  host: 'localhost',
+  port: 3306, // default
+  user: Meteor.settings.dbUser,
+  password : Meteor.settings.dbPass
+});
+
+
+// Connect to Spotify web service
 ServiceConfiguration.configurations.update (
   { "service": "spotify" },
   {
     $set: {
-      "clientId": "61874b61b08a4d96bf209da45b275bb0",
-      "secret": "49585d31f073467d8c36adcecc6847fe"
+      "clientId": Meteor.settings.SpotifyID,
+      "secret": Meteor.settings.SpotifyKey
     }
   },
   { upsert: true }

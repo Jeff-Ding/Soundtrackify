@@ -1,10 +1,10 @@
 Template.disambiguation.helpers({
   moviesExact: function () {
-    return matchedTitle.reactive();
+    // TODO
   },
 
   moviesInexact: function () {
-    return matchedSubstring.reactive();
+    // TODO
   }
 });
 
@@ -14,16 +14,15 @@ Template.disambiguation.events({
     event.preventDefault();
 
     Session.set("title", this.title);
-    matchedId.change(this.movie_id);
 
     Session.set("titles", []);
 
     // login to Spotify
-    var options = {
-      showDialogue: false,
-      requestPermissions: ['playlist-modify-private']
-    };
-    Meteor.loginWithSpotify(options);
+    // var options = {
+    //   showDialogue: false,
+    //   requestPermissions: ['playlist-modify-private']
+    // };
+    // Meteor.loginWithSpotify(options);
 
     Router.go('playlist');
   }

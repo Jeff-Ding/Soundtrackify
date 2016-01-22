@@ -4,8 +4,6 @@ Template.home.events({
     event.preventDefault();
 
     var input = event.target.text.value;
-    matchedTitle.change(input);
-    matchedSubstring.change(input);
 
     // redirect to songs page
     Router.go('disambiguation');

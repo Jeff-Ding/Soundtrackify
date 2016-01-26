@@ -1,10 +1,6 @@
 Template.disambiguation.helpers({
-  moviesExact: function () {
-    // TODO
-  },
-
-  moviesInexact: function () {
-    // TODO
+  movies: function () {
+    return myTitles.find();
   }
 });
 

@@ -19,11 +19,23 @@ Template.home.events({
 
         // convert list of titles and movieIDs strings into list of pair objects
         for (var i in result) {
-          if (i % 2 === 0) {
-            resultObj.push({title: null, movieID: null});
-            resultObj[index].title = result[i];
-          } else {
-            resultObj[index].movieID = result[i];
+          var mod = i % 4;
+          var value = result[i];
+
+          if (mod === 0) {
+            resultObj.push({
+              movieID: null,
+              title: null,
+              year: null,
+              director: null});
+
+            resultObj[index].movieID = value;
+          } else if (mod === 1){
+            resultObj[index].title = value;
+          } else if (mod === 2){
+            resultObj[index].year = value;
+          } else if (mod === 3){
+            resultObj[index].director = value;
             index++;
           }
         }
@@ -31,8 +43,6 @@ Template.home.events({
         Session.set("results", resultObj);
       }
     });
-
-    console.log(Session.get("results"));
 
     // redirect to songs page
     Router.go("disambiguation");

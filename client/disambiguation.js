@@ -1,6 +1,6 @@
 Template.disambiguation.helpers({
-  movies: function () {
-    return myTitles.find();
+  results: function () {
+    return Session.get("results");
   }
 });
 

@@ -15,15 +15,23 @@ results = [x for x in results if x["kind"] == "movie"]
 for movie in results:
     access.update(movie)
 
-    print movie.movieID
-    print movie['title']
-
     if "year" in movie.keys():
-        print movie['year']
+        year = movie["year"]
     else:
-        print "Unknown Year"
+        year = "Unknown Year"
 
     if "director" in movie.keys():
-        print movie["director"][0]
+        director = movie["director"][0]
     else:
-        print "Unknown Director"
+        director = "Unknown Director"
+
+    if "votes" in movie.keys():
+        votes = movie["votes"]
+    else:
+        votes = 0
+
+    print movie.movieID
+    print movie["title"]
+    print year
+    print director
+    print votes

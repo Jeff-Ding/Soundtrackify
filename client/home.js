@@ -1,3 +1,40 @@
+function processResult(resultObj, result) {
+  // index into resultObj
+  var index = 0;
+
+  // convert list of titles and movieIDs strings into list of pair objects
+  for (var i in result) {
+    var mod = i % 5;
+    var value = result[i];
+
+    if (mod === 0) {
+      resultObj.push({
+        movieID: null,
+        title: null,
+        year: null,
+        director: null});
+
+      resultObj[index].movieID = value;
+    } else if (mod === 1){
+      resultObj[index].title = value;
+    } else if (mod === 2){
+      resultObj[index].year = value;
+    } else if (mod === 3){
+      resultObj[index].director = value;
+    } else if (mod === 4){
+      resultObj[index].votes = parseInt(value);
+      index++;
+    }
+  }
+
+  resultObj.sort(function (a, b) {
+    return b.votes - a.votes;
+  });
+
+  console.log(resultObj);
+  Session.set("results", resultObj);
+}
+
 Template.home.events({
   "submit .search": function (event) {
     // prevent browser default form submit
@@ -14,33 +51,7 @@ Template.home.events({
         console.log(err);
         alert("Failed to access movie database: " + err.toString());
       } else {
-        // index into resultObj
-        var index = 0;
-
-        // convert list of titles and movieIDs strings into list of pair objects
-        for (var i in result) {
-          var mod = i % 4;
-          var value = result[i];
-
-          if (mod === 0) {
-            resultObj.push({
-              movieID: null,
-              title: null,
-              year: null,
-              director: null});
-
-            resultObj[index].movieID = value;
-          } else if (mod === 1){
-            resultObj[index].title = value;
-          } else if (mod === 2){
-            resultObj[index].year = value;
-          } else if (mod === 3){
-            resultObj[index].director = value;
-            index++;
-          }
-        }
-
-        Session.set("results", resultObj);
+        processResult(resultObj, result);
       }
     });
 

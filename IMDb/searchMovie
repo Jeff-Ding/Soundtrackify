@@ -35,3 +35,12 @@ for movie in results:
     print year
     print director
     print votes
+
+    if "soundtrack" in movie.keys():
+        soundtrack = movie['soundtrack']
+        for track in soundtrack:
+            print track.replace('\n', '\\') + '\\\\',
+
+        print ''
+    else:
+        print ''

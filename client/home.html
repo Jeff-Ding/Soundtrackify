@@ -1,7 +1,15 @@
-<template name = "home">
+<template name="home">
   <h1>Soundtrackify</h1>
 
   <form class="search">
-    <input type = "text" name="text" placeholder = "Search for a movie"/>
+    <input class="typeahead" placeholder="Search for a movie"
+           autocomplete="off" spellcheck="off" data-source="searchMovie"
+           data-select="selected" data-template="suggestion" data-limit="20"/>
   </form>
+</template>
+
+<template name="suggestion">
+  <div>
+    {{title}} ({{year}}) {{director}}
+  </div>
 </template>

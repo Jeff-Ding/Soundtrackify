@@ -63,5 +63,50 @@ Meteor.methods({
     });
 
     return future.wait();
+  },
+
+  checkSpotify: function (songs) {
+    // API access
+    var spotifyAPI = new SpotifyWebApi();
+
+    return songs.map(function (song) {
+      var ret = {
+        title: song.title,
+        performer: song.performer ? song.performer : "Unknown",
+        writer: song.writer ? song.writer : "Unknown",
+        found: onSpotify(spotifyAPI, song),
+        checked: true
+      };
+
+      return ret;
+    });
   }
+
 });
+
+function checkTokenRefreshed(response, api) {
+  if (response.error && response.error.statusCode === 401) {
+    api.refreshAndUpdateAccessToken();
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function onSpotify(spotifyAPI, song) {
+    var query = song.title + (song.performer ?
+                              ' ' + song.performer : song.writer ?
+                                song.writer : '');
+    var result = spotifyAPI.searchTracks(query, {limit: 1});
+
+    // token needs to be refreshed, try again
+    if (checkTokenRefreshed(result, spotifyAPI)) {
+      result = spotifyAPI.searchTracks(query, {limit: 1});
+    }
+
+    if (result.data.body.tracks.items[0]) {  // found
+      return result.data.body.tracks.items[0].uri;
+    } else {  // not found
+      return null;
+    }
+ }

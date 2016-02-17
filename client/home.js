@@ -16,8 +16,18 @@ Template.home.helpers({
 
   selected: function (event, suggestion, datasetName) {
     var movie = JSON.parse(JSON.stringify(suggestion));
-    Session.set("soundtrack", parseTracks(movie.soundtrack));
     Session.set("title", movie.title);
+
+    // login with Spotify
+    var options =  {
+      showDialog: false,
+      requestPermissions: ['playlist-modify-private']
+    };
+    Meteor.loginWithSpotify(options);
+
+    // check if songs available on spotify
+    findSongs(parseTracks(movie.soundtrack));
+
     Router.go("playlist");
   }
 });
@@ -66,6 +76,16 @@ function parseTracks(text) {
     soundtrack.push(track);
   }
 
-  console.log(soundtrack);
   return soundtrack;
+}
+
+function findSongs(songs) {
+  Meteor.wrapAsync(Meteor.call('checkSpotify', songs, function (err, results) {
+    if (err) {
+      console.error(err);
+      alert("Unable to reach Spotify\n" + err);
+    } else {
+      Session.set("soundtrack", JSON.parse(JSON.stringify(results)));
+    }
+  }));
 }

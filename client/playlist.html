@@ -12,17 +12,17 @@
 
 <template name = "song">
   <li>
-    <input type="checkbox" checked="{{checked}}" class="toggle-checked"/>
-    <span>
-      {{#if performer}}
-        {{title}} - {{performer}}
-      {{else}}
-        {{#if writer}}
-          {{title}} - {{writer}}
-        {{else}}
-          {{title}} - Unknown Artist
-        {{/if}}
-      {{/if}}
-    </span>
+    {{#if found}}
+      <input type="checkbox" checked="{{checked}}" class="toggle-checked"/>
+      {{title}}
+      Performed by: {{performer}}
+      Written by: {{writer}}
+    {{else}}
+      <s>
+        {{title}}
+        Performed by: {{performer}}
+        Written by: {{writer}}
+      </s>
+    {{/if}}
   </li>
 </template>

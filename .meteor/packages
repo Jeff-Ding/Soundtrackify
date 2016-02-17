@@ -21,3 +21,4 @@ insecure                # Allow all DB writes from clients (for prototyping)
 iron:router
 sergeyt:typeahead
 xinranxiao:spotify-web-api
+xinranxiao:accounts-spotify

@@ -26,6 +26,7 @@ Template.home.helpers({
     Meteor.loginWithSpotify(options);
 
     // check if songs available on spotify
+    Session.set("loaded", false); // songs not retrieved yet
     findSongs(parseTracks(movie.soundtrack));
 
     Router.go("playlist");
@@ -86,6 +87,7 @@ function findSongs(songs) {
       alert("Unable to reach Spotify\n" + err);
     } else {
       Session.set("soundtrack", JSON.parse(JSON.stringify(results)));
+      Session.set("loaded", true);
     }
   }));
 }

@@ -1,13 +1,17 @@
 <template name = "playlist">
   <h2>{{movie}}</h2>
 
-  <ul>
-    {{#each songs}}
-      {{> song}}
-    {{/each}}
-  </ul>
+  {{#if loaded}}
+    <ul>
+      {{#each songs}}
+        {{> song}}
+      {{/each}}
+    </ul>
+    <button type = "button" class = "create">create playlist</button>
+  {{else}}
+    {{> loading}}
+  {{/if}}
 
-  <button type = "button" class = "create">create playlist</button>
 </template>
 
 <template name = "song">
@@ -25,4 +29,8 @@
       </s>
     {{/if}}
   </li>
+</template>
+
+<template name = "loading">
+  loading
 </template>

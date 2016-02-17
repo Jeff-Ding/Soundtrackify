@@ -80,6 +80,30 @@ Meteor.methods({
 
       return ret;
     });
+  },
+
+  createPlaylist: function (name, URIlist) {
+    var spotifyAPI = new SpotifyWebApi();
+
+    // initialize playlist
+    var result = spotifyAPI.createPlaylist(
+      Meteor.user().services.spotify.id, name, {public: false}
+    );
+
+    // token needs to be refreshed, try again
+    if (checkTokenRefreshed(result, spotifyAPI)) {
+      result = spotifyAPI.createPlaylist(
+        Meteor.user().services.spotify.id, name, {public: false}
+      );
+    }
+
+    // add tracks from URIs to create playlist
+    spotifyAPI.addTracksToPlaylist(
+      Meteor.user().services.spotify.id, result.data.body.id, URIlist, {}
+    );
+
+    // return playlist URL
+    return result.data.body.external_urls.spotify;
   }
 
 });
@@ -107,6 +131,6 @@ function onSpotify(spotifyAPI, song) {
     if (result.data.body.tracks.items[0]) {  // found
       return result.data.body.tracks.items[0].uri;
     } else {  // not found
-      return null;
+      return false;
     }
  }

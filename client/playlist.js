@@ -1,4 +1,8 @@
 Template.playlist.helpers({
+  loaded: function () {
+    return Session.equals("loaded", true);
+  },
+
   songs: function () {
     return Session.get("soundtrack");
   },
@@ -13,10 +17,27 @@ Template.playlist.events({
     this.checked = !this.checked;
   },
 
-  "click .create": function (event) {
-    // prevent browser default button click
-    event.preventDefault();
+  "click .create": function () {
+    // list of Spotify URIs of found songs
+    var foundSongs =
+      Session.get("soundtrack").
+        filter(function (song) {
+          return song.found;
+        }).
+        map(function (song) {
+          return song.found;
+        });
 
-    // TODO
+    var name = Session.get("title") + " Soundtrack";
+    Meteor.call(
+      'createPlaylist', name, foundSongs, function (err, result) {
+        if (err) {
+          alert("Unable to create playlist\n" + err);
+        } else {
+          Session.set("playlistURL", result);
+          Router.go("success");
+        }
+      }
+    );
   }
 });

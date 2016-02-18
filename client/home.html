@@ -1,11 +1,21 @@
 <template name="home">
-  <h1>Soundtrackify</h1>
+  <div class="container">
 
-  <form class="search">
-    <input class="typeahead" placeholder="Search for a movie"
-           autocomplete="off" spellcheck="off" data-source="searchMovie"
-           data-select="selected" data-template="suggestion" data-limit="20"/>
-  </form>
+    <div class="row">
+      <div class="logo">
+        <h1>Soundtrackify</h1>
+      </div>
+
+      <div class="search form-group">
+        <input class="typeahead form-control"
+          placeholder="Search for a movie" autocomplete="off" spellcheck="off"
+          data-source="searchMovie" data-select="selected"
+          data-template="suggestion" data-limit="20"/>
+      </div>
+    </div>
+
+  </div>
+
 </template>
 
 <template name="suggestion">

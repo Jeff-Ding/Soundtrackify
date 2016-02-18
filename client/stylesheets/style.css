@@ -1,0 +1,30 @@
+body {
+  background-color: teal !important;
+}
+
+h1 {
+  font-size: 500% !important;
+}
+
+.row {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logo {
+  position: relative;
+  bottom: 75px;
+}
+
+.search {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-100%, -100%);
+}
+
+.form-control {
+  width: 200% !important;
+}

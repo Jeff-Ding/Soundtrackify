@@ -6,7 +6,7 @@
   * Results from server method calls are relayed between pages through session variables to persist across page navigation
   * Server method for querying Spotify API for songs is now called asynchronously upon movie selection (function findSongs in home.js) so that instead of hanging until songs are found, a loading message is displayed
 * Added function parseTracks to home.js to offload raw text object parsing from server to client (replace crude SQL substring matching with precise regular expression matching in JavaScript)
-* Rewrote back-end to incorporate IMDbPY update
+* Rewrote back-end to incorporate IMDbPY update and streamline database integration
  * In addition to importing raw text dump to SQL database, IMDbPY provides interface to database with wrapper functions for querying movie info fields
  * Clunky SQL initializations and working from views (as described in the master branch) can now be done away with as querying can be done entirely through IMDbPY itself
  * Server now forks a process to run a Python script (IMDb/searchMovie) that passes client requests for movie/soundtrack info as input arguments to IMDbPY wrapper functions and returns the results from stdout.

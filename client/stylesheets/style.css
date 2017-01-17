@@ -22,7 +22,6 @@ nav {
   transform: translate(-30%, 0%);
 }
 
-
 .input-field .twitter-typeahead + label {
   left: 1rem;
 }
@@ -33,12 +32,7 @@ nav {
   font-family: 'Cabin', sans-serif;
 }
 
-.typeahead:focus {
-  background-color: #ffebee !important;
-}
-
 .tt-suggestion {
-
 }
 
 .movie {
@@ -49,7 +43,7 @@ nav {
 
 .movie:hover {
   font-size: 18pt;
-  color: #80cbc4;
+  color: #B2DFDB;
   cursor: pointer;
 }
 

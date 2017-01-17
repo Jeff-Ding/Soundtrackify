@@ -6,41 +6,18 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 # create objects to access SQL database with IMDb's information
-access = imdb.IMDb('sql', uri='mysql://soundtrackify:moviemagic@localhost:3306/imdb')
+access = imdb.IMDb();
 
 # search for title and output results
 results = access.search_movie(sys.argv[1])
 results = [x for x in results if x["kind"] == "movie"]
 
 for movie in results:
-    access.update(movie)
-
     if "year" in movie.keys():
         year = movie["year"]
     else:
         year = "Unknown Year"
 
-    if "director" in movie.keys():
-        director = movie["director"][0]
-    else:
-        director = "Unknown Director"
-
-    if "votes" in movie.keys():
-        votes = movie["votes"]
-    else:
-        votes = 0
-
     print movie.movieID
     print movie["title"]
     print year
-    print director
-    print votes
-
-    if "soundtrack" in movie.keys():
-        soundtrack = movie['soundtrack']
-        for track in soundtrack:
-            print track.replace('\n', '\\') + '\\\\',
-
-        print ''
-    else:
-        print ''

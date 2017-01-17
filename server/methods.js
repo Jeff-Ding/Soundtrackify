@@ -29,7 +29,7 @@ Meteor.methods({
 
       // convert list of titles and movieIDs strings into list of pair objects
       for (var i in result) {
-        var mod = i % 6;
+        var mod = i % 3;
         var value = result[i];
 
         if (mod === 0) {
@@ -44,25 +44,17 @@ Meteor.methods({
           resultObj[index].title = value;
         } else if (mod === 2){
           resultObj[index].year = value;
-        } else if (mod === 3){
-          resultObj[index].director = value;
-        } else if (mod === 4){
-          resultObj[index].votes = parseInt(value);
-        } else if (mod === 5){
-          resultObj[index].soundtrack = value;
           index++;
         }
       }
-
-      // sort by popularity
-      resultObj.sort(function (a, b) {
-        return b.votes - a.votes;
-      });
 
       future.return(resultObj);
     });
 
     return future.wait();
+  },
+
+  findSoundtrack: function(movieID) {
   },
 
   checkSpotify: function (songs) {

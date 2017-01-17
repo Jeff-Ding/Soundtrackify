@@ -20,11 +20,11 @@ Template.home.helpers({
     Session.set("title", movie.title);
 
     // login with Spotify
-    var options =  {
-      showDialog: false,
-      requestPermissions: ['playlist-modify-private']
-    };
-    Meteor.loginWithSpotify(options);
+    //var options =  {
+    //  showDialog: false,
+    //  requestPermissions: ['playlist-modify-private']
+    //};
+    //Meteor.loginWithSpotify(options);
 
     // check if songs available on spotify
     Session.set("loaded", false); // songs not retrieved yet

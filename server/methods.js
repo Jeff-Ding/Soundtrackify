@@ -54,7 +54,22 @@ Meteor.methods({
     return future.wait();
   },
 
-  findSoundtrack: function(movieID) {
+  getSoundtrack: function(movieID) {
+    this.unblock();
+    var future = new Future();
+
+    // call getSoundtrack python program to query movie database
+    var command = '/Users/Jeff/Documents/Projects/soundtrackify/IMDb/getSoundtrack "' + query + '"';
+
+    exec(command, function(err, stdout, stderr) {
+      if (err) {
+        console.log(err);
+        throw new Meteor.Error(500, command + "failed");
+      }
+
+      // get result from stdout
+      var result = stdout;
+      console.log(result);
   },
 
   checkSpotify: function (songs) {

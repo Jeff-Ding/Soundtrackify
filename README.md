@@ -1,6 +1,8 @@
 # Soundtrackify
 An app for creating Spotify playlists from movie soundtracks.
 
+*The* ***redesign*** *branch features many stylistic and functional improvements and is a work in progress*.
+
 ## Background
 Given that cinema is an audiovisual experience, it is not a far-fletched claim to say that half of the experience of watching a movie is listening to its auditory elements. For this reason, some of the most celebrated movies have the most memorable music. Movie music not only heightens the audience’s emotional involvement during viewing, but have also proliferated into popular culture to the point where not only can they stir the same emotions in association with the movie with just the jingle of a few notes, but they can also stand on their own as cultural icons. For this reason, it should be no surprise that many people enjoy listening to movie music.
 

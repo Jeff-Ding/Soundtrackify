@@ -6,7 +6,7 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 # create objects to access SQL database with IMDb's information
-access = imdb.IMDb('sql', uri='mysql://root:jdieks,zla42@localhost:3306/imdb')
+access = imdb.IMDb('sql', uri='mysql://soundtrackify:moviemagic@localhost:3306/imdb')
 
 # search for title and output results
 results = access.search_movie(sys.argv[1])

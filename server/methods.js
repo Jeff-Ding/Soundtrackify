@@ -69,17 +69,22 @@ Meteor.methods({
     // API access
     var spotifyAPI = new SpotifyWebApi();
 
-    return songs.map(function (song) {
+    var soundtrack = songs.map(function (song) {
+      var songURI = onSpotify(spotifyAPI, song);
       var ret = {
         title: song.title,
         performer: song.performer ? song.performer : "Unknown",
         writer: song.writer ? song.writer : "Unknown",
-        found: onSpotify(spotifyAPI, song),
-        checked: true
+        found: songURI,
+        checked: Boolean(songURI)
       };
 
       return ret;
     });
+
+
+    return soundtrack;
+
   },
 
   createPlaylist: function (name, URIlist) {

@@ -1,5 +1,7 @@
+
 Template.home.rendered = function () {
   // initializes all typeahead instances
+  Session.set("ty", "typeahead");
   Meteor.typeahead.inject();
 };
 
@@ -36,7 +38,7 @@ Template.home.helpers({
 // parse raw text tracks info into array object
 function parseTracks(text) {
   // turn into list of invididual tracks
-  var stripped = text.replace(/['"]+/g, '');
+  var stripped = text.replace(/["]+/g, '');
   var textList = stripped.split('\\\\').slice(1, -1);
 
   // return array of objects
@@ -86,6 +88,7 @@ function findSongs(songs) {
       console.error(err);
       alert("Unable to reach Spotify\n" + err);
     } else {
+      console.log(results);
       Session.set("soundtrack", JSON.parse(JSON.stringify(results)));
       Session.set("loaded", true);
     }

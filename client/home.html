@@ -1,25 +1,31 @@
 <template name="home">
+
   <div class="container">
+    <div class="vcenter">
+      <h1 class="logo red-text text-lighten-4">Soundtrackify</h1>
+    </div>
 
-    <div class="row">
-      <div class="logo">
-        <h1>Soundtrackify</h1>
-      </div>
-
-      <div class="search form-group">
-        <input class="typeahead form-control"
-          placeholder="Search for a movie" autocomplete="off" spellcheck="off"
-          data-source="searchMovie" data-select="selected"
-          data-template="suggestion" data-limit="20"/>
-      </div>
+    <div class="vcenter">
+      <nav>
+        <div class="nav-wrapper teal lighten-3">
+            <div class="input-field">
+              <input class="typeahead grey-text text-darken-2" type="search"
+                placeholder="Search for a movie" autocomplete="off" spellcheck="off"
+                data-source="searchMovie" data-select="selected"
+                data-template="suggestion" data-limit="4"/>
+              <label for="search">
+                <i class="material-icons grey-text text-darken-2">movie</i>
+              </label>
+            </div>
+        </div>
+      </nav>
     </div>
 
   </div>
-
 </template>
 
 <template name="suggestion">
-  <div>
-    {{title}} ({{year}}) {{director}}
+  <div class="movie">
+    <em>{{title}}</em>    <small>(Dir. {{director}}, {{year}})</small>
   </div>
 </template>

@@ -1,36 +1,26 @@
 <template name = "playlist">
-  <h2>{{movie}}</h2>
+  <div class="container">
+    <h2 class="title">{{movie}}</h2>
 
-  {{#if loaded}}
-    <ul>
+    <form action="#">
       {{#each songs}}
         {{> song}}
       {{/each}}
-    </ul>
-    <button type = "button" class = "create">create playlist</button>
-  {{else}}
-    {{> loading}}
-  {{/if}}
+    </form>
 
+    <button type = "button" class = "create">create playlist</button>
+  </div>
 </template>
 
 <template name = "song">
-  <li>
+  <p>
     {{#if found}}
-      <input type="checkbox" checked="{{checked}}" class="toggle-checked"/>
-      {{title}}
-      Performed by: {{performer}}
-      Written by: {{writer}}
+      <input type="checkbox" id="{{title}}" checked/>
     {{else}}
-      <s>
-        {{title}}
-        Performed by: {{performer}}
-        Written by: {{writer}}
-      </s>
+      <input type="checkbox" id="{{title}}" disabled="disabled"/>
     {{/if}}
-  </li>
-</template>
-
-<template name = "loading">
-  loading
+    <label for="{{title}}">
+      {{title}} - <small>{{performer}}</small>
+    </label>
+  </p>
 </template>

@@ -8,5 +8,5 @@
 * Added function parseTracks to home.js to offload raw text object parsing from server to client (replace crude SQL substring matching with precise regular expression matching in JavaScript)
 * Rewrote back-end to incorporate IMDbPY update
  * In addition to importing raw text dump to SQL database, IMDbPY provides interface to database with wrapper functions for querying movie info fields
- * Clunky SQL initializations and working from views (as described in the master branch) can now be done away with entirely as querying can be done entirely through IMDbPY itself
+ * Clunky SQL initializations and working from views (as described in the master branch) can now be done away with as querying can be done entirely through IMDbPY itself
  * Server now forks a process to run a Python script (IMDb/searchMovie) that passes client requests for movie/soundtrack info as input arguments to IMDbPY wrapper functions and returns the results from stdout.

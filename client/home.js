@@ -1,4 +1,3 @@
-
 Template.home.rendered = function () {
   // initializes all typeahead instances
   Session.set("ty", "typeahead");

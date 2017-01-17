@@ -9,7 +9,7 @@ Meteor.methods({
     var future = new Future();
 
     // call searchMovie python program to query movie database
-    var command = '~/Projects/soundtrackify/IMDb/searchMovie "' + query + '"';
+    var command = '/Users/Jeff/Documents/Projects/soundtrackify/IMDb/searchMovie "' + query + '"';
 
     exec(command, function(err, stdout, stderr) {
       if (err) {

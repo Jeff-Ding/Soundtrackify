@@ -9,4 +9,4 @@
 * Rewrote back-end to incorporate IMDbPY update and streamline database integration
  * In addition to importing raw text dump to SQL database, IMDbPY provides interface to database with wrapper functions for querying movie info fields
  * Clunky SQL initializations and working from views (as described in the master branch) can now be done away with as querying can be done entirely through IMDbPY itself
- * Server now forks a process to run a Python script (IMDb/searchMovie) that passes client requests for movie/soundtrack info as input arguments to IMDbPY wrapper functions and returns the results from stdout.
+ * Server now forks a process to run a Python script (IMDb/searchMovie) that passes client requests for movie/soundtrack info as input arguments to IMDbPY wrapper functions and returns the results from stdout

@@ -2,6 +2,14 @@
 
 # Soundtrackify
 An app for creating Spotify playlists from movie soundtracks.
+- [General](#general)
+- [Implementation](#implementation)
+	- [Overview](#overview)
+	- [Server Side](#server-side)
+		- [Scraping](#scraping)
+	- [Database Design](#database-design)
+- [Client Side](#client-side)
+- [Further Work](#further-work)
 
 ## General
 A movie’s released soundtrack may be very different from what audiences remember hearing in theaters. Often, the film studio only has rights to release original music composed specifically for the film and not music licensed from other artists. This means that a commercial soundtrack album is usually missing some of the most memorable songs from the movie. In cases where the movie only features licensed music, a soundtrack may not be available at all. This can be frustrating for those wanting to listen to their favorite movie soundtracks and relive their viewing experiences.

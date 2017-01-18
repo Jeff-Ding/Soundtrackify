@@ -17,6 +17,16 @@ body {
   color: white;
 }
 
+.description {
+  position: relative;
+  bottom: 150px;
+  font-family: 'Cabin', sans-serif;
+  font-size: 20px;
+  color: #ffebee;
+  text-align: center;
+  padding-bottom: 150px;
+}
+
 nav {
   width: 250%;
   transform: translate(-30%, 0%);

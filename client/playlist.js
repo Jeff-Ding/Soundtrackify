@@ -1,10 +1,6 @@
 var soundtrack;
 
 Template.playlist.helpers({
-  loaded: function () {
-    return Session.equals("loaded", true);
-  },
-
   songs: function () {
     soundtrack = Session.get("soundtrack");
     return soundtrack;
@@ -12,6 +8,10 @@ Template.playlist.helpers({
 
   movie: function () {
     return Session.get("title");
+  },
+
+  playlistURL: function () {
+    return Session.get("playlistURL");
   }
 });
 
@@ -20,7 +20,7 @@ Template.playlist.events({
     this.checked = !this.checked;
   },
 
-  "click .btn": function () {
+  "click #create": function () {
     console.log(soundtrack);
 
     //login with Spotify
@@ -45,7 +45,6 @@ Template.playlist.events({
           alert("Unable to create playlist\n" + err);
         } else {
           Session.set("playlistURL", result);
-          Router.go("success");
         }
       }
     );

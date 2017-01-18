@@ -2,7 +2,14 @@
   <div class="container">
     <h2 class="title red-text text-lighten-4">{{movie}}</h2>
 
-    {{#if loaded}}
+    {{#if playlistURL}}
+      <div class="message">Playlist successfully created.</div>
+
+      <div class="button">
+        <a target="_blank" href={{playlistURL}} class="waves-effect waves-light btn teal lighten-1"><i class="material-icons left">play_circle_outline</i>Open in Spotify</a>
+        <a href="/" class="waves-effect waves-light btn teal lighten-1"><i class="material-icons left">playlist_add</i>Create another playlist</a>
+      </div>
+    {{else if songs}}
       <div class="message">Customize your playlist.</div>
 
       <div class="body">
@@ -13,7 +20,7 @@
       </form>
 
       <div class="button">
-        <a class="waves-effect waves-light btn teal lighten-1"><i class="material-icons left">queue_music</i>Create Playlist</a>
+        <a id="create" class="waves-effect waves-light btn teal lighten-1"><i class="material-icons left">queue_music</i>Create Spotify playlist</a>
       </div>
       </div>
     {{else}}

@@ -1,14 +1,25 @@
 <template name = "playlist">
   <div class="container">
-    <h2 class="title">{{movie}}</h2>
+    <h2 class="title red-text text-lighten-4">{{movie}}</h2>
 
-    <form action="#">
-      {{#each songs}}
-        {{> song}}
-      {{/each}}
-    </form>
+    {{#if loaded}}
+      <div class="message">Customize your playlist.</div>
 
-    <button type = "button" class = "create">create playlist</button>
+      <div class="body">
+      <form action="#">
+        {{#each songs}}
+          {{> song}}
+        {{/each}}
+      </form>
+
+      <div class="button">
+        <a class="waves-effect waves-light btn teal lighten-1"><i class="material-icons left">queue_music</i>Create Playlist</a>
+      </div>
+      </div>
+    {{else}}
+      <div class="message">Finding tracks...</div>
+    {{/if}}
+
   </div>
 </template>
 
@@ -16,11 +27,18 @@
   <p>
     {{#if found}}
       <input type="checkbox" id="{{title}}" checked/>
+      <label for="{{title}}">
+	<div class="song found">
+          <em>{{title}}</em><small> - {{performer}}</small>
+	</div>
+      </label>
     {{else}}
       <input type="checkbox" id="{{title}}" disabled="disabled"/>
-    {{/if}}
-    <label for="{{title}}">
-      {{title}} - <small>{{performer}}</small>
-    </label>
+      <label for="{{title}}">
+	<div class="song not-found red-text text-lighten-3">
+          <del><em>{{title}}</em><small> - {{performer}}</small></del> <ins><small>(Unavailable on Spotify)</small></ins>
+	</div>
+      </label>
+ {{/if}}
   </p>
 </template>

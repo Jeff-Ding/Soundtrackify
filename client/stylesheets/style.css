@@ -22,17 +22,22 @@ nav {
   transform: translate(-30%, 0%);
 }
 
+.nav-wrapper {
+  background-color: #ffebee;
+}
+
 .input-field .twitter-typeahead + label {
   left: 1rem;
 }
 
-
 .twitter-typeahead {
   width: 100%;
+  padding-bottom: 15px;
   font-family: 'Cabin', sans-serif;
 }
 
 .tt-suggestion {
+  line-height: 2;
 }
 
 .movie {
@@ -42,8 +47,8 @@ nav {
 }
 
 .movie:hover {
-  font-size: 18pt;
-  color: #B2DFDB;
+  font-size: 16pt;
+  color: #80CBC4;
   cursor: pointer;
 }
 

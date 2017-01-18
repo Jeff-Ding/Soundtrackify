@@ -1,3 +1,43 @@
 .title {
   font-family: 'Lobster', cursive;
+  text-align: center;
+  padding-top: 30px;
+}
+
+.message {
+  font-family: 'Cabin', sans-serif;
+  font-size: 20px;
+  color: #ffebee;
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.body {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,0%);
+}
+
+p {
+  font-family: 'Cabin', sans-serif;
+}
+
+.song {
+  font-size: 18px;
+  line-height: 18px;
+  color: #ffebee;
+  transition: 0.2s ease;
+}
+
+.found:hover {
+  font-size: 19px;
+  color: #80CBC4;
+}
+
+.button {
+  font-family: 'Cabin', sans-serif;
+  font-size: 15px;
+  padding-top: 20px;
+  padding-bottom: 100px;
+  text-align: center;
 }

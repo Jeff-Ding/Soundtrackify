@@ -20,28 +20,34 @@ Template.playlist.events({
     this.checked = !this.checked;
   },
 
-  "click .create": function () {
+  "click .btn": function () {
     console.log(soundtrack);
-//    // list of Spotify URIs of found songs
-//    var foundSongs =
-//      Session.get("soundtrack").
-//        filter(function (song) {
-//          return song.found;
-//        }).
-//        map(function (song) {
-//          return song.found;
-//        });
-//
-//    var name = Session.get("title") + " Soundtrack";
-//    Meteor.call(
-//      'createPlaylist', name, foundSongs, function (err, result) {
-//        if (err) {
-//          alert("Unable to create playlist\n" + err);
-//        } else {
-//          Session.set("playlistURL", result);
-//          Router.go("success");
-//        }
-//      }
-//    );
+
+    //login with Spotify
+    var options =  {
+      showDialog: false,
+      requestPermissions: ['playlist-modify-private']
+    };
+    Meteor.loginWithSpotify(options);
+
+    // list of Spotify URIs of found and checked songs
+    var songList = soundtrack.filter(function (song) {
+                     return (song.found && song.checked);
+                   }).map(function (song) {
+                     return song.found;
+                   });
+
+    var name = Session.get("title") + " Soundtrack";
+    console.log(songList)
+    Meteor.call(
+      'createPlaylist', name, songList, function (err, result) {
+        if (err) {
+          alert("Unable to create playlist\n" + err);
+        } else {
+          Session.set("playlistURL", result);
+          Router.go("success");
+        }
+      }
+    );
   }
 });

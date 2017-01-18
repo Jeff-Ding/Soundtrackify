@@ -19,13 +19,6 @@ Template.home.helpers({
     var movie = JSON.parse(JSON.stringify(suggestion));
     Session.set("title", movie.title);
 
-    // login with Spotify
-    //var options =  {
-    //  showDialog: false,
-    //  requestPermissions: ['playlist-modify-private']
-    //};
-    //Meteor.loginWithSpotify(options);
-
     // get soundtrack and check if songs are on Spotify
     Session.set("loaded", false); // songs not retrieved yet
     getSoundtrack(movie.movieID);

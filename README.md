@@ -1,4 +1,4 @@
-*The* ***redesign*** *branch features many stylistic and functional improvements and is currently a work in progress*.
+*The [redesign branch](https://github.com/Jeff-Ding/Soundtrackify/tree/redesign) features many stylistic and functional improvements and is currently a work in progress*.
 
 # Soundtrackify
 An app for creating Spotify playlists from movie soundtracks.

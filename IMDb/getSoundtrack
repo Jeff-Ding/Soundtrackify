@@ -10,12 +10,23 @@ access = imdb.IMDb();
 
 # get movie by movieID
 movie = access.get_movie(sys.argv[1])
+access.update(movie, 'soundtrack')
 
 if "soundtrack" in movie.keys():
     soundtrack = movie['soundtrack']
     for track in soundtrack:
-        print track.replace('\n', '\\') + '\\\\',
+        title = track.keys()[0]
+        credits = track.values()[0]
+	performer = [person for role, person in credits.items() if 'performed' in role.lower()]
+	writer = [person for role, person in credits.items() if 'written' in role.lower()]
 
-        print ''
-    else:
-        print ''
+	# output to stdio
+        print title
+	if performer:
+	    print performer[0]
+	else: # list is empty, no performer found
+	    print ''
+	if writer:
+	    print writer[0]
+	else: # list is empty, no writer found
+	    print ''

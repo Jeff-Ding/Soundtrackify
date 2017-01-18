@@ -26,23 +26,35 @@ Template.home.helpers({
     //};
     //Meteor.loginWithSpotify(options);
 
-    // check if songs available on spotify
+    // get soundtrack and check if songs are on Spotify
     Session.set("loaded", false); // songs not retrieved yet
-    findSongs(parseTracks(movie.soundtrack));
+    getSoundtrack(movie.movieID);
 
     Router.go("playlist");
   }
 });
 
-function findSongs(songs) {
-  Meteor.wrapAsync(Meteor.call('checkSpotify', songs, function (err, results) {
+// return list of song objects given movieID
+function getSoundtrack(movieID) {
+  Meteor.call('getSoundtrack', movieID, function (err, results) {
     if (err) {
       console.error(err);
-      alert("Unable to reach Spotify\n" + err);
+      alert("Unable to find soundtrack information" + err);
     } else {
-      console.log(results);
+      checkSpotify(results);
+    }
+  });
+}
+
+// check if songs can be found on Spotify
+function checkSpotify(songs) {
+  Meteor.call('checkSpotify', songs, function (err, results) {
+    if (err) {
+      console.error(err);
+      alert("Unable to reach Spotify" + err);
+    } else {
       Session.set("soundtrack", JSON.parse(JSON.stringify(results)));
       Session.set("loaded", true);
     }
-  }));
+  });
 }

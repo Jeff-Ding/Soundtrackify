@@ -17,17 +17,17 @@ Meteor.methods({
         throw new Meteor.Error(500, command + "failed");
       }
 
-      // parse program output into list of alternating titles and movieIDs
+      // parse program output into repeating list of movieID, title, and year strings
       var result = stdout.split("\n");
       result.pop();
 
-      // list of matched movie objects
+      // list of movie objects
       var resultObj = [];
       
       // index into resultObj
       var index = 0;
 
-      // convert list of titles and movieIDs strings into list of pair objects
+      // convert list of strings into list of objects
       for (var i in result) {
         var mod = i % 3;
         var value = result[i];
@@ -36,12 +36,12 @@ Meteor.methods({
           resultObj.push({
             movieID: null,
             title: null,
-            year: null,
-            director: null});
+            year: null});
 
           resultObj[index].movieID = value;
         } else if (mod === 1){
-          resultObj[index].title = value;
+	  // remove text between brackets avoid lengthy titles
+          resultObj[index].title = value.replace(/ \([^)]*\)/, '');
         } else if (mod === 2){
           resultObj[index].year = value;
           index++;
@@ -54,12 +54,11 @@ Meteor.methods({
     return future.wait();
   },
 
-  getSoundtrack: function(movieID) {
-    this.unblock();
+  getSoundtrack: function (movieID) {
     var future = new Future();
 
     // call getSoundtrack python program to query movie database
-    var command = '/Users/Jeff/Documents/Projects/soundtrackify/IMDb/getSoundtrack "' + query + '"';
+    var command = '/Users/Jeff/Documents/Projects/soundtrackify/IMDb/getSoundtrack "' + movieID + '"';
 
     exec(command, function(err, stdout, stderr) {
       if (err) {
@@ -67,15 +66,68 @@ Meteor.methods({
         throw new Meteor.Error(500, command + "failed");
       }
 
-      // get result from stdout
-      var result = stdout;
-      console.log(result);
+      // parse program output into repeating list of title, performer, and writer strings
+      var result = stdout.split("\n");
+      result.pop();
+
+      // list of track objects
+      var resultObj = [];
+      
+      // index into resultObj
+      var index = 0;
+
+      // convert list of strings into list of objects
+      for (var i in result) {
+        var mod = i % 3;
+        var value = result[i];
+
+        if (mod === 0) {
+          resultObj.push({
+            title: null,
+            performer: null,
+            writer: null});
+
+	  // remove text between brackets 
+          resultObj[index].title = value.replace(/ \([^)]*\)/, '');
+        } else if (mod === 1){
+	  if (value) { // parse nonempty string
+	    stageName = value.match(/\(as ([^)]*)\)/); // may appear as "Real Name (as Stage Name)
+	    if (stageName) { // exists
+	      // remove text between brackets 
+	      resultObj[index].performer = stageName[1].replace(/ \([^)]*\)/, '');
+	    } else {
+	      // remove text between brackets 
+	      resultObj[index].performer = value.replace(/ \([^)]*\)/, '');
+	    }
+	  }
+        } else if (mod === 2){
+	  if (value) { // parse nonempty string
+	    stageName = value.match(/\(as ([^)]*)\)/); // may appear as "Real Name (as Stage Name)
+	    if (stageName) { // exists
+	      // remove text between brackets 
+	      resultObj[index].writer = stageName[1].replace(/ \([^)]*\)/, '');
+	    } else {
+	      // remove text between brackets 
+	      resultObj[index].writer = value.replace(/ \([^)]*\)/, '');
+	    }
+	  }
+
+          index++;
+        }
+      }
+
+      future.return(resultObj);
+    });
+
+    return future.wait();
   },
 
+  // given a list of track objects, checks of each can be found on Spotify
+  // returns new list soundtrack with original information and found status
   checkSpotify: function (songs) {
     // API access
     var spotifyAPI = new SpotifyWebApi();
-
+  
     var soundtrack = songs.map(function (song) {
       var songURI = onSpotify(spotifyAPI, song);
       var ret = {
@@ -85,13 +137,13 @@ Meteor.methods({
         found: songURI,
         checked: Boolean(songURI)
       };
-
+  
       return ret;
     });
-
-
+  
+  
     return soundtrack;
-
+  
   },
 
   createPlaylist: function (name, URIlist) {
@@ -120,63 +172,10 @@ Meteor.methods({
 
 });
 
-// parse raw text tracks info into array object
-function parseTracks(text) {
-  // turn into list of invididual tracks
-  var stripped = text.replace(/["]+/g, '');
-  var textList = stripped.split('\\\\').slice(1, -1);
 
-  // return array of objects
-  var soundtrack = [];
-
-  for (var i in textList) {
-    // seperate fields of each track
-    var trackInfo = textList[i].split("\\");
-    var numTracks = trackInfo.length;
-
-    // initialize track object with title
-    var track = {};
-    track.title = trackInfo[0].trim();
-
-    // parse rest of fields
-    for (var j = 1; j < numTracks; j++) {
-      if (trackInfo[j].match(/.*Performed .*by /) !== null) {
-        var performer = trackInfo[j].replace(/.*Performed .*by /, '');
-
-        var perfAKA = trackInfo[j].match(/\(as ([^)]*)\)/);
-        if (perfAKA !== null) {
-          performer = perfAKA[1];
-        }
-
-        track.performer = performer.replace(/ \([^)]*\)/, '');
-      } else if (trackInfo[j].match(/.*Written .*by /) !== null) {
-        var writer = trackInfo[j].replace(/.*Written .*by /, '');
-
-        var writeAKA = trackInfo[j].match(/\(as ([^)]*)\)/);
-        if (writeAKA !== null) {
-          writer = writeAKA[1];
-        }
-
-        track.writer = writer.replace(/ \([^)]*\)/, '');
-      }
-    }
-
-    soundtrack.push(track);
-  }
-
-  return soundtrack;
-}
-
-function checkTokenRefreshed(response, api) {
-  if (response.error && response.error.statusCode === 401) {
-    api.refreshAndUpdateAccessToken();
-    return true;
-  } else {
-    return false;
-  }
-}
-
+// checks of song can be found on Spotify
 function onSpotify(spotifyAPI, song) {
+    // start with performer, fall back to writer
     var query = song.title + (song.performer ?
                               ' ' + song.performer : song.writer ?
                                 song.writer : '');
@@ -192,6 +191,14 @@ function onSpotify(spotifyAPI, song) {
     } else {  // not found
       return false;
     }
- }
+}
 
-function 
+// checks if Spotify API token needs refreshed
+function checkTokenRefreshed(response, api) {
+  if (response.error && response.error.statusCode === 401) {
+    api.refreshAndUpdateAccessToken();
+    return true;
+  } else {
+    return false;
+  }
+}

@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+
+import imdb
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
+# create objects to access SQL database with IMDb's information
+access = imdb.IMDb();
+
+# get movie by movieID
+movie = access.get_movie(sys.argv[1])
+
+if "soundtrack" in movie.keys():
+    soundtrack = movie['soundtrack']
+    for track in soundtrack:
+        print track.replace('\n', '\\') + '\\\\',
+
+        print ''
+    else:
+        print ''

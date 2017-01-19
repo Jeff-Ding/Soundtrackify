@@ -16,37 +16,48 @@ Template.playlist.helpers({
 });
 
 Template.playlist.events({
-  "click input": function() {
+  "click input": function () {
     this.checked = !this.checked;
   },
 
   "click #create": function () {
-    console.log(soundtrack);
-
-    //login with Spotify
+    // setup Spotify login
     var options =  {
-      showDialog: false,
+      showDialog: true,
       requestPermissions: ['playlist-modify-private']
     };
-    Meteor.loginWithSpotify(options);
 
-    // list of Spotify URIs of found and checked songs
-    var songList = soundtrack.filter(function (song) {
-                     return (song.found && song.checked);
-                   }).map(function (song) {
-                     return song.found;
-                   });
-
-    var name = Session.get("title") + " Soundtrack";
-    console.log(songList)
-    Meteor.call(
-      'createPlaylist', name, songList, function (err, result) {
-        if (err) {
-          alert("Unable to create playlist\n" + err);
-        } else {
-          Session.set("playlistURL", result);
-        }
+    // login with Spotify, hold until complete
+    Meteor.loginWithSpotify(options, function (err) {
+      if (err) {
+        alert("Unable to log in to Spotify\n" + err);
+      } else {
+	createPlaylist(soundtrack);
       }
-    );
+    });
+  },
+
+  "click #restart": function () {
+    Session.keys = {};
   }
 });
+
+function createPlaylist(soundtrack) {
+  // list of Spotify URIs of found and checked songs
+  var songList = soundtrack.filter(function (song) {
+                   return (song.found && song.checked);
+                 }).map(function (song) {
+                   return song.found;
+                 });
+
+  var name = Session.get("title") + " Soundtrack";
+  Meteor.call(
+    'createPlaylist', name, songList, function (err, result) {
+      if (err) {
+        alert("Unable to create playlist\n" + err);
+      } else {
+        Session.set("playlistURL", result);
+      }
+    }
+  );
+}

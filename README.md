@@ -22,7 +22,7 @@ Soundtrackify is a web application that automates this process. It sources the s
 
 ## Implementation
 ### Overview
-Soundtrackify is written primarily with Meteor, an open source web application framework based entirely around JavaScript. On the front-end it uses HTML, JavaScript, jQuery and Blaze (Meteor’s library for creating reactive user interfaces). On the back-end, it uses Node.js, which is normally integrated with MongoDB under Meteor’s defaults, but using the “Reactive MySQL for Meteor” package (https://github.com/numtel/meteor-mysql), has been modified to access a MySQL database in order to integrate with IMDbPY (more details below).
+Soundtrackify is written primarily with Meteor, an open source web application framework based entirely around JavaScript. On the front-end it uses HTML, JavaScript, jQuery and Blaze (Meteor’s library for creating reactive user interfaces). On the back-end, it uses Node.js, which is normally integrated with MongoDB under Meteor’s defaults, but using the [“Reactive MySQL for Meteor” package](https://github.com/numtel/meteor-mysql), has been modified to access a MySQL database in order to integrate with IMDbPY (more details below).
 
 ### Server Side
 #### Scraping
@@ -40,7 +40,7 @@ It is clearly not in any normal form. The following were noted and performed (ex
 * The desired soundtrack data for each movie resides in this “info” attribute, however, it is an undifferentiated text field that also contains information for runtimes, plots, budgets, languages, etc. Including soundtrack information, that are a total of 113 information categories in the “info" attribute.
 * To differentiate the information category, another attribute “info_type_id” is used. It takes on an int between 1 and 113 to specify the information type. The actual names of the types that correspond to these numbers are in a relation info_type(id, info).
 * A query was performed on info_type to find the id # associated with info = “soundtrack”. This was saved into a local variable soundtrack_id.
-* The soundtrack information in the “info” attribute partially follows the form, as specified by IMDb’s submission guidelines (http://www.imdb.com/updates/guide/soundtracks):
+* The soundtrack information in the “info” attribute partially follows the form, as specified by [IMDb’s submission guidelines](http://www.imdb.com/updates/guide/soundtracks):
 	
 	*"Title of Song" Written by person(s)/group Performed by person(s)/group*
 * When a person/group has their own page on IMDb, their name shows up on the website as a hyperlink, which manifests in the “info” field as single quotes around the person/group name, followed by “(qv)”. E.g. “Performed by ‘Elvis Presley’ (qv)”. If Elvis didn’t have his own IMDb page, he would show as “Performed by Elvis Presley” in the “info” field.

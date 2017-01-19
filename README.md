@@ -10,4 +10,4 @@ The app now takes advantage of IMDbPY's update which allows for fast HTTP fetchi
   * Results from server method calls are relayed between pages through session variables to persist across page navigation
   * App now waits on server method *checkSpotify()* to find songs on Spotify and displays a loading message instead of showing blank page
 * Seperated IMDbPY call for soundtrack credits from main call for movieID, title, and year to make typeahead faster and more responsive. Soundtrack credits aren't queried until the user actually selects a movie
-* Moved parsing of raw text returned from IMDb from client to server
+* Instead of parsing raw text returned from IMDbPY in SQL, replaced with more precise JavaScript regular expressions in server/methods.js

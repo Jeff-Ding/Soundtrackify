@@ -26,7 +26,7 @@ Soundtrackify is written primarily with Meteor, an open source web application f
 
 ### Server Side
 #### Scraping
-Given the sheer number of movie and song titles, it would be inefficient to extract information by scraping IMDb’s website upon every client request. Instead, all information is extracted initially and dumped into a database for optimized access. IMDb’s conditions of use prohibit many scraping methods: “You may not use data mining, robots, screen scraping, or similar online data gathering and extraction tools on our website” (http://www.imdb.com/help/show_leaf?usedatasoftware). Rather, IMDb allows “limited non-commercial use” of its data in software, and only the data that is freely available to public via plain text file dumps (http://www.imdb.com/interfaces/). An open-source Python package for retrieving and manipulating IMDb data, IMDbPY (http://imdbpy.sourceforge.net/index.html) was used to parse the text files on ASCII delimeters into values and fields, which were then inserted into a MySQL database.
+IMDb allows [“limited non-commercial use”](http://www.imdb.com/help/show_leaf?usedatasoftware) of its data in software, and publically releases [plain text file dumps](http://www.imdb.com/interfaces/) of its entire database. An open-source Python package for retrieving and manipulating IMDb data, [IMDbPY](http://imdbpy.sourceforge.net/index.html) was used to parse the text files on ASCII delimeters into values and fields, which were then inserted into a MySQL database.
 
 ### Database Design
 IMDbPY has no options for schema specification and instead creates one optimized for data insertion. The following diagram shows the schema generated:
